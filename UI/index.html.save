@@ -1,0 +1,46 @@
+DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HW1-YourName</title>
+</head>
+<body>
+
+    <h1>My Blog Submission</h1>
+
+    <form id="blogForm">
+        
+        <input type="text" id="title" placeholder="Enter the title of your blog" required autofocus>
+        <br><br>
+
+        <input type="text" id="author" placeholder="Enter your name" required>
+        <br><br>
+
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <br><br>
+
+        <textarea id="content" placeholder="Write your content here…" required></textarea>
+        <br><br>
+
+        <select id="category">
+            <option value="Technology">Technology</option>
+            <option value="Lifestyle">Lifestyle</option>
+            <option value="Travel">Travel</option>
+            <option value="Education">Education</option>
+        </select>
+        <br><br>
+
+        <input type="checkbox" id="terms">
+        <label for="terms">I agree to the terms and conditions</label>
+        <br><br>
+
+        <button type="submit">Publish Blog</button>
+
+    </form>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+

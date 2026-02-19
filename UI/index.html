@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HW1-YourName</title>
+  <style>
+    :root{
+      --bg: #0b1220;
+      --card: rgba(255,255,255,0.06);
+      --cardBorder: rgba(255,255,255,0.10);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.70);
+      --muted2: rgba(255,255,255,0.55);
+      --accent: #7c3aed; /* purple */
+      --danger: #ef4444;
+      --shadow: 0 18px 60px rgba(0,0,0,0.45);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+    body{
+      margin: 0;
+      min-height: 100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(124,58,237,0.35), transparent 55%),
+        radial-gradient(900px 600px at 85% 20%, rgba(59,130,246,0.25), transparent 60%),
+        radial-gradient(1000px 700px at 50% 90%, rgba(16,185,129,0.18), transparent 55%),
+        linear-gradient(180deg, #050814, #0b1220 70%);
+      display: grid;
+      place-items: center;
+      padding: 28px 16px;
+    }
+
+    .wrap{
+      width: min(980px, 100%);
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (max-width: 860px){
+      .wrap{ grid-template-columns: 1fr; }
+    }
+
+    .header{
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 8px 4px;
+    }
+
+    .header h1{
+      margin: 0;
+      font-size: clamp(22px, 3vw, 30px);
+      letter-spacing: 0.2px;
+    }
+
+    .header p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--cardBorder);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card .card-h{
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--cardBorder);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .badge{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(124,58,237,0.16);
+      border: 1px solid rgba(124,58,237,0.25);
+      color: rgba(255,255,255,0.9);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .badge dot{
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: inline-block;
+      box-shadow: 0 0 0 5px rgba(124,58,237,0.15);
+    }
+
+    .card .card-b{
+      padding: 18px;
+    }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 560px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    label{
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .field{
+      display: flex;
+      flex-direction: column;
+    }
+
+    input, textarea, select{
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 11px 12px;
+      outline: none;
+      transition: border-color 150ms ease, box-shadow 150ms ease, transform 100ms ease;
+    }
+
+    textarea{
+      resize: vertical;
+      min-height: 160px;
+      line-height: 1.4;
+    }
+
+    input::placeholder, textarea::placeholder{
+      color: rgba(255,255,255,0.45);
+    }
+
+    input:focus, textarea:focus, select:focus{
+      border-color: rgba(124,58,237,0.75);
+      box-shadow: 0 0 0 4px rgba(124,58,237,0.18);
+    }
+
+    .help{
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted2);
+    }
+
+    .row{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 12px;
+    }
+
+    .terms{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .terms input{
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      accent-color: var(--accent);
+    }
+
+    .actions{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    button{
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 80ms ease, filter 120ms ease;
+    }
+
+    .primary{
+      background: linear-gradient(135deg, rgba(124,58,237,1), rgba(59,130,246,1));
+      color: white;
+      box-shadow: 0 12px 30px rgba(124,58,237,0.22);
+    }
+
+    .primary:active{ transform: translateY(1px); }
+    .primary:hover{ filter: brightness(1.05); }
+
+    .ghost{
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.88);
+    }
+
+    .ghost:hover{ filter: brightness(1.08); }
+
+    .preview{
+      display: grid;
+      gap: 12px;
+    }
+
+    .preview h2{
+      margin: 0;
+      font-size: 16px;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .preview .box{
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .kv{
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 10px 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .kv b{ color: rgba(255,255,255,0.9); font-weight: 600; }
+
+    .pill{
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.85);
+      font-size: 12px;
+    }
+
+    .status{
+      font-size: 12px;
+      color: var(--muted2);
+    }
+
+    .error-note{
+      display:none;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(239,68,68,0.10);
+      border: 1px solid rgba(239,68,68,0.25);
+      color: rgba(255,255,255,0.88);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="header">
+      <div>
+        <h1>HW1-Sharan</h1>
+        <p>Submit your blog with clean validation + console JSON output.</p>
+      </div>
+      <span class="badge"><dot></dot> HW1 Form</span>
+    </div>
+
+    <!-- Form card -->
+    <div class="card">
+      <div class="card-h">
+        <div>
+          <div style="font-weight:700;">Create a new post</div>
+          <div class="status">All fields required. Content must be &gt; 25 characters.</div>
+        </div>
+      </div>
+
+      <div class="card-b">
+        <form id="blogForm" novalidate>
+          <div class="grid">
+            <div class="field">
+              <label for="title">Blog Title</label>
+              <input type="text" id="title" placeholder="Enter the title of your blog" required autofocus />
+              <div class="help">This is the title shown at the top of your blog post.</div>
+            </div>
+
+            <div class="field">
+              <label for="author">Author Name</label>
+              <input type="text" id="author" placeholder="Enter your name" required />
+              <div class="help">Who’s publishing this post?</div>
+            </div>
+
+            <div class="field">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="Enter your email" required />
+              <div class="help">We’ll use this for contact info (demo only).</div>
+            </div>
+
+            <div class="field">
+              <label for="category">Category</label>
+              <select id="category">
+                <option value="Technology">Technology</option>
+                <option value="Lifestyle">Lifestyle</option>
+                <option value="Travel">Travel</option>
+                <option value="Education">Education</option>
+              </select>
+              <div class="help">Choose the best topic for your post.</div>
+            </div>
+          </div>
+
+          <div class="field" style="margin-top:14px;">
+            <label for="content">Content</label>
+            <textarea id="content" placeholder="Write your content here…" required></textarea>
+            <div class="help"><span id="charCount">0</span> characters</div>
+          </div>
+
+          <div id="inlineError" class="error-note"></div>
+
+          <div class="row">
+            <div class="terms">
+              <input type="checkbox" id="terms" />
+              <label for="terms" style="margin:0; color:inherit;">I agree to the terms and conditions.</label>
+            </div>
+
+            <div class="actions">
+              <button type="button" class="ghost" id="resetBtn">Reset</button>
+              <button type="submit" class="primary">Publish Blog</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Preview card -->
+    <div class="card">
+      <div class="card-h">
+        <div style="font-weight:700;">Live Preview</div>
+        <span class="pill" id="previewCategory">Technology</span>
+      </div>
+      <div class="card-b preview">
+        <div class="box">
+          <h2 id="previewTitle">Your blog title will appear here</h2>
+          <div class="status" id="previewMeta">By Your Name • your@email.com</div>
+        </div>
+
+        <div class="box">
+          <div class="kv">
+            <b>Title</b> <span id="kvTitle">—</span>
+            <b>Author</b> <span id="kvAuthor">—</span>
+            <b>Email</b> <span id="kvEmail">—</span>
+            <b>Category</b> <span id="kvCategory">—</span>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="status" style="margin-bottom:8px;">Content</div>
+          <div id="previewContent" style="white-space: pre-wrap; color: rgba(255,255,255,0.86); line-height: 1.5;">
+            Start typing to see your content preview…
+          </div>
+        </div>
+
+        <div class="status">
+          Tip: Open DevTools → Console to see JSON logs after successful submission.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Link JavaScript at the END (required by HW) -->
+  <script src="script.js"></script>
+</body>
+</html>
+
